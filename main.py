@@ -1,1 +1,5 @@
-print("Hello to everyone who uses science to make art better")
+from tools.camera_integration import VideoCapture
+
+
+vc = VideoCapture()
+vc.display_live_camera_signal()
