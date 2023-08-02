@@ -9,6 +9,6 @@ RUN pip install --upgrade pip
 COPY ./requirements.txt /app
 RUN pip install -r requirements.txt
 
-COPY ../../Desktop /app
+COPY . /app
 
 CMD ["python", "main.py"]
