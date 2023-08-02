@@ -16,6 +16,11 @@ class VideoCapture:
         else:
             raise Exception("Video capture device is unavailable")
 
+    def convert_to_grayscale(self):
+        data = self.capture_frames()
+        grayscale_data = cv2.cvtColor(data, cv2.COLOR_BGR2GRAY)
+        return grayscale_data
+
     def display_live_camera_signal(self, exit_key='q'):
         while True:
             cv2.imshow("Live Camera", self.capture_frames())
