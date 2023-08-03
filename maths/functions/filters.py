@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-def sobel_filter(image_matrix):
+def sobel_filter_gradient_magnitude(image_matrix):
     gray_image = cv2.cvtColor(image_matrix, cv2.COLOR_BGR2GRAY)
 
     sobel_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
