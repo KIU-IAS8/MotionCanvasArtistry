@@ -1,4 +1,4 @@
-from tools.display_functions import VideoCapture
+from tools.camera_functions import VideoCapture
 
 
 vc = VideoCapture()
