@@ -17,13 +17,13 @@ class VideoCapture(VideoCaptureDevice):
             if cv2.waitKey(1) & 0xFF == ord(exit_key):
                 break
 
-    def display_live_camera_signal_sobel_filter_x(self, exit_key='q', padding=0, strides=1):
+    def display_live_camera_signal_sobel_filter_x(self, exit_key='q'):
         while True:
             cv2.imshow("Live Camera Sobel X", cv2.Sobel(self.capture_frames(), cv2.CV_64F, 1, 0))
             if cv2.waitKey(1) & 0xFF == ord(exit_key):
                 break
 
-    def display_live_camera_signal_sobel_filter_y(self, exit_key='q', padding=0, strides=1):
+    def display_live_camera_signal_sobel_filter_y(self, exit_key='q'):
         while True:
             cv2.imshow("Live Camera Sobel X", cv2.Sobel(self.capture_frames(), cv2.CV_64F, 0, 1))
             if cv2.waitKey(1) & 0xFF == ord(exit_key):
