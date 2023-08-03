@@ -1,10 +1,10 @@
-from tools.display_functions import VideoCapture
+from tools.display_functions import LiveCapture
 
 
-vc = VideoCapture()
+lc = LiveCapture()
 
-# vc.display_live_camera_signal_original()
-# vc.display_live_camera_signal_sobel_filter_x()
-# vc.display_live_camera_signal_sobel_filter_y()
+# lc.display_live_camera_signal_original()
+# lc.display_live_camera_signal_sobel_filter_x()
+# lc.display_live_camera_signal_sobel_filter_y()
 
-vc.display_live_camera_signal_sobel_filter_magnitude()
+lc.display_live_camera_signal_sobel_filter_magnitude()
