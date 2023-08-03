@@ -1,5 +1,6 @@
 import cv2
 from tools.camera_integration import VideoCaptureDevice
+from maths.functions.filters import sobel_filter
 
 
 class VideoCapture(VideoCaptureDevice):
@@ -26,5 +27,11 @@ class VideoCapture(VideoCaptureDevice):
     def display_live_camera_signal_sobel_filter_y(self, exit_key='q'):
         while True:
             cv2.imshow("Live Camera Sobel X", cv2.Sobel(self.capture_frames(), cv2.CV_64F, 0, 1))
+            if cv2.waitKey(1) & 0xFF == ord(exit_key):
+                break
+
+    def display_live_camera_signal_sobel_filter_magnitude(self, exit_key='q'):
+        while True:
+            cv2.imshow("Live Camera Sobel Gradient Magnitude", sobel_filter(self.capture_frames()))
             if cv2.waitKey(1) & 0xFF == ord(exit_key):
                 break
