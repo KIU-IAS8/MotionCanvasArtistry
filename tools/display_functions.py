@@ -1,6 +1,6 @@
 import cv2
 from tools.camera_integration import VideoCaptureDevice
-from tools.image_filters import sobel_filter_gradient_magnitude, morphological_filter
+from transformations.filters import sobel_filter_gradient_magnitude, morphological_filter
 
 
 class LiveCapture(VideoCaptureDevice):
