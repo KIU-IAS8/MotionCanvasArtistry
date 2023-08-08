@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from maths.constants.matrices import ONES
 
 
 def sobel_filter_gradient_magnitude(image_matrix):
@@ -12,3 +13,10 @@ def sobel_filter_gradient_magnitude(image_matrix):
     gradient_magnitude = cv2.normalize(gradient_magnitude, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
 
     return gradient_magnitude
+
+
+def morphological_filter(image_matrix):
+    erosion = cv2.erode(image_matrix, np.array(ONES), iterations=1)
+    dilation = cv2.dilate(image_matrix, np.array(ONES), iterations=1)
+
+    return erosion, dilation
