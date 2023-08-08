@@ -3,7 +3,7 @@ import numpy as np
 from scipy.ndimage import gaussian_filter
 
 
-def gaussian_rescaling(img, scale_factor, sigma=1.0):
+def gaussian_rescaling_func(img, scale_factor, sigma=1.0):
     if scale_factor < np.spacing(1.0):
         print("Too small a scaling factor!!")
         return
