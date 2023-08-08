@@ -10,8 +10,7 @@ class LiveCapture(VideoCaptureDevice):
         self.__frame_width = frame_width
         self.__exit_key = exit_key
 
-
-    def display_live_camera_signal_original(self, exit_key='q'):
+    def display_live_camera_signal_original(self):
         while True:
             cv2.imshow(
                 "Live Camera",
