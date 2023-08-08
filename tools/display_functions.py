@@ -1,6 +1,6 @@
 import cv2
 from tools.camera_integration import VideoCaptureDevice
-from tools.image_filters import sobel_filter_gradient_magnitude, morphological_filter
+from transformations.filters import sobel_filter_gradient_magnitude, morphological_filter
 
 
 class LiveCapture(VideoCaptureDevice):
@@ -45,8 +45,7 @@ class LiveCapture(VideoCaptureDevice):
                 cv2.resize(
                     cv2.Sobel(
                         self.capture_frames(),
-                        cv2.CV_64F, 0, 1
-                    ),
+                        cv2.CV_64F, 0, 1),
                     (self.__frame_width,
                      self.__frame_height)
                 )
