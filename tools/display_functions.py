@@ -9,11 +9,6 @@ class LiveCapture(VideoCaptureDevice):
         self.__frame_height = frame_height
         self.__frame_width = frame_width
 
-    def convert_to_grayscale(self):
-        data = self.capture_frames()
-        grayscale_data = cv2.cvtColor(data, cv2.COLOR_BGR2GRAY)
-        return grayscale_data
-
     def display_live_camera_signal_original(self, exit_key='q'):
         while True:
             cv2.imshow(
@@ -25,7 +20,7 @@ class LiveCapture(VideoCaptureDevice):
                 )
             )
             if cv2.waitKey(1) & 0xFF == ord(exit_key):
-                break
+                raise SystemExit
 
     def display_live_camera_signal_sobel_filter_x(self, exit_key='q'):
         while True:
@@ -40,7 +35,7 @@ class LiveCapture(VideoCaptureDevice):
                 )
             )
             if cv2.waitKey(1) & 0xFF == ord(exit_key):
-                break
+                raise SystemExit
 
     def display_live_camera_signal_sobel_filter_y(self, exit_key='q'):
         while True:
@@ -56,7 +51,7 @@ class LiveCapture(VideoCaptureDevice):
                 )
             )
             if cv2.waitKey(1) & 0xFF == ord(exit_key):
-                break
+                raise SystemExit
 
     def display_live_camera_signal_sobel_filter_magnitude(self, exit_key='q'):
         while True:
@@ -70,4 +65,4 @@ class LiveCapture(VideoCaptureDevice):
                 )
             )
             if cv2.waitKey(1) & 0xFF == ord(exit_key):
-                break
+                raise SystemExit
