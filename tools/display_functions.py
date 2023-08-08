@@ -45,8 +45,7 @@ class LiveCapture(VideoCaptureDevice):
                 cv2.resize(
                     cv2.Sobel(
                         self.capture_frames(),
-                        cv2.CV_64F, 0, 1
-                    ),
+                        cv2.CV_64F, 0, 1),
                     (self.__frame_width,
                      self.__frame_height)
                 )
