@@ -1,8 +1,8 @@
 import cv2
 
-from maths.functions.optical_flow import optical_flow
+from mathematics.optical_flow import optical_flow
 from tools.display_functions import LiveCapture
-from tools.image_filters import sobel_filter_gradient_magnitude
+from transformations.filters import sobel_filter_gradient_magnitude
 
 lc = LiveCapture()
 

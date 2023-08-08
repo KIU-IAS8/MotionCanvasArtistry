@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 from scipy.interpolate import interp2d
 from skimage.util import img_as_ubyte
 
-from gaussian_rescaling import gaussian_rescaling_func
+from mathematics.gaussian_rescaling import gaussian_rescaling_func
 from skimage.transform import resize
 from scipy.sparse import csr_matrix
 
