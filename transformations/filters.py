@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from maths.constants.matrices import ONES
+from constants.matrices import ONES
 
 
 def sobel_filter_gradient_magnitude(image_matrix):
