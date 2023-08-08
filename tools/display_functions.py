@@ -10,12 +10,8 @@ class LiveCapture(VideoCaptureDevice):
         self.__frame_width = frame_width
         self.__exit_key = exit_key
 
-    def convert_to_grayscale(self):
-        data = self.capture_frames()
-        grayscale_data = cv2.cvtColor(data, cv2.COLOR_BGR2GRAY)
-        return grayscale_data
 
-    def display_signal_original(self):
+    def display_live_camera_signal_original(self, exit_key='q'):
         while True:
             cv2.imshow(
                 "Live Camera",
