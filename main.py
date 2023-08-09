@@ -1,16 +1,13 @@
 from tools.display_functions import LiveCapture
+from visualization.objects.sphere import Sphere
+from visualization.visualize import Picture
 
+# lc = LiveCapture()
+# lc.display_sobel_filter_gradient_magnitude()
 
-lc = LiveCapture()
+picture = Picture()
 
-# lc.display_original()
-# lc.display_sobel_filter_x()
-# lc.display_sobel_filter_y()
+s1 = Sphere(start_color=(0.0, 1.0, 0.0), end_color=(0.0, 1.0, 0.0))
+s2 = Sphere(radius=0.3, position=(0.5, 0.5, 0.0))
 
-lc.display_sobel_filter_gradient_magnitude()
-
-# lc.display_morphological_filter_erosion()
-# lc.display_morphological_filter_dilation()
-
-# lc.display_morphological_filter_dilation_sobel_gradient_magnitude()
-# lc.display_morphological_filter_erosion_sobel_gradient_magnitude()
+picture.visualize(spheres=[s1, s2])

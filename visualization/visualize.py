@@ -1,35 +1,30 @@
-import random
-from tkinter import *
-from visualization.ball import Ball
-from constants.colors import COLORS
-import time
+import glfw
+from OpenGL.GL import *
 
-window = Tk(className="Visualization")
 
-WIDTH = 960
-HEIGHT = 540
-canvas = Canvas(window, width=WIDTH, height=HEIGHT)
-canvas.pack()
+def terminate():
+    glfw.terminate()
 
-balls = []
-for i in range(random.randint(50, 250)):
-    diameter = random.randint(0, 100)
-    x = random.randint(25, WIDTH-diameter-25)
-    y = random.randint(25, HEIGHT-diameter-25)
-    balls.append(
-        Ball(
-            canvas,
-            x,
-            y,
-            diameter,
-            random.randint(-10, 10),
-            random.randint(-10, 10),
-            COLORS[random.randint(0, len(COLORS) - 1)]
-        )
-    )
 
-while True:
-    for ball in balls:
-        ball.move()
-    window.update()
-    time.sleep(0.05)
+class Picture:
+    def __init__(self, height=1000, width=1000, title="Title"):
+        glfw.init()
+        self.__window = glfw.create_window(width, height, title, None, None)
+        glfw.make_context_current(self.__window)
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0)
+        glBindVertexArray(0)
+
+        glEnable(GL_DEPTH_TEST)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+
+    def visualize(self, **objects):
+        while not glfw.window_should_close(self.__window):
+            glfw.poll_events()
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+            for sphere in objects["spheres"]:
+                sphere.draw()
+                sphere.update(0.001)
+
+            glfw.swap_buffers(self.__window)
