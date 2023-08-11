@@ -2,10 +2,11 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
+from mathematics.img_grad import img_grad
 from mathematics.mywarp_rgb import mywarp_rgb
 
 
-def optic_flow_brox(img1, img2):
+def optic_flow(img1, img2):
     alpha = 30.0
     gamma = 80.0
     ht, wt, dt = img1.shape
