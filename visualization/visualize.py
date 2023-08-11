@@ -37,7 +37,7 @@ class Picture:
 
             for sphere in objects["spheres"]:
                 sphere.accelerate(a_x=0.00001, a_y=0.00001)
-                sphere.rebase()
+                # sphere.rebase()
                 sphere.draw()
 
             glfw.swap_buffers(self.__window)

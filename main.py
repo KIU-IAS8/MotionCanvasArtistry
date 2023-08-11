@@ -7,9 +7,9 @@ import cv2
 # lc = LiveCapture()
 # lc.display_sobel_filter_gradient_magnitude()
 
-picture = Picture(factor=50, height=1000, width=1000)
+picture = Picture(factor=8, height=1000, width=1000)
 
-image = rotate_matrix_right(cv2.imread("mock_data/images/img2.png"))
+image = rotate_matrix_right(cv2.imread("mock_data/images/mock2.jpg"))
 
 spheres = []
 
