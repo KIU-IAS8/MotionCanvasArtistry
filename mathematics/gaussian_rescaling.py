@@ -1,15 +1,14 @@
 import cv2
 import numpy as np
-from scipy.ndimage import gaussian_filter
+
+from mathematics.gaussian_smooth import gaussian_smooth
 
 
-def gaussian_rescaling_func(img, scale_factor, sigma=1.0):
-    if scale_factor < np.spacing(1.0):
+def gaussian_rescaling(img, scale_factor, sigma=1.0):
+    if scale_factor < np.finfo(float).eps:
         print("Too small a scaling factor!!")
         return
 
-    h, w, c = img.shape
-    img_smooth = gaussian_filter(img, sigma)
-    img_scaled = cv2.resize(img_smooth, (int(w * scale_factor), int(h * scale_factor)))
-
+    img_smooth = gaussian_smooth(img, 1.0 / scale_factor, 1e-3)
+    img_scaled = cv2.resize(img_smooth, None, fx=scale_factor, fy=scale_factor, interpolation=cv2.INTER_LINEAR)
     return img_scaled
