@@ -1,25 +1,34 @@
 import random
+import time
 
-import glfw
-from OpenGL.GL import *
-
-
-def terminate():
-    glfw.terminate()
+from vpython import rate, vector, canvas
 
 
 class Picture:
-    def __init__(self, height=400, width=400, factor=10, title="Title"):
-        glfw.init()
-        self.__window = glfw.create_window(width, height, title, None, None)
-
-        glfw.make_context_current(self.__window)
-        glBindBuffer(GL_ARRAY_BUFFER, 0)
-        glBindVertexArray(0)
-
+    def __init__(
+            self,
+            height=400,
+            width=400,
+            factor=10,
+            fps=30,
+            scale=1.5,
+            title="Title",
+    ):
         self.__width = width
         self.__height = height
         self.__factor = factor
+        self.__rate = fps
+        self.__canvas = canvas(title=title, width=width, height=height)
+        self.__canvas.range = scale
+
+    def get_rate(self):
+        return self.__rate
+
+    def set_rate(self, new_rate):
+        self.__rate = new_rate
+
+    def get_canvas(self):
+        return self.__canvas
 
     def get_factor(self):
         return self.__factor
@@ -31,13 +40,8 @@ class Picture:
         return self.__width
 
     def visualize(self, **objects):
-        while not glfw.window_should_close(self.__window):
-            glfw.poll_events()
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
+        time.sleep(3)
+        while True:
+            rate(self.__rate)
             for sphere in objects["spheres"]:
-                sphere.accelerate(a_x=0.00001, a_y=0.00001)
-                # sphere.rebase()
-                sphere.draw()
-
-            glfw.swap_buffers(self.__window)
+                sphere.rebase(random.uniform(-0.0005, 0.0005), random.uniform(-0.0005, 0.0005))
