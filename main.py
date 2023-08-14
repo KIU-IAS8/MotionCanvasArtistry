@@ -13,6 +13,7 @@ image = rotate_matrix_right(cv2.imread("mock_data/images/mock2.jpg"))
 
 spheres = []
 
+
 for x in range(0, len(image), picture.get_factor()):
     for y in range(0, len(image), picture.get_factor()):
         spheres.append(
