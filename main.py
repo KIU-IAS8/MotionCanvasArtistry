@@ -1,39 +1,53 @@
-from tools.display_functions import LiveCapture
+import random
 from visualization.objects.sphere import Sphere
 from visualization.visualize import Picture
 from mathematics.operations import *
+from vpython import vector
 import cv2
 
-# lc = LiveCapture()
-# lc.display_sobel_filter_gradient_magnitude()
+factor = 10
+width = 800
+height = 800
 
-picture = Picture(factor=8, height=1000, width=1000)
+image_path = "mock_data/images/img2.png"
 
-image = rotate_matrix_right(cv2.imread("mock_data/images/mock2.jpg"))
+picture = Picture(
+    factor=factor,
+    height=height,
+    width=width,
+    fps=30,
+    scale=1.5,
+    title=image_path
+)
+
+image = rotate_matrix_right(cv2.imread(image_path))
 
 spheres = []
 
-
-for x in range(0, len(image), picture.get_factor()):
-    for y in range(0, len(image), picture.get_factor()):
+for x in range(0, len(image), factor):
+    for y in range(0, len(image), factor):
         spheres.append(
-            Sphere(radius=1 / len(image) * picture.get_factor(),
-                   position=(
-                       index_to_coordinate_mapper(x, picture.get_factor(), len(image), picture.get_width()),
-                       index_to_coordinate_mapper(y, picture.get_factor(), len(image), picture.get_width()),
-                       0.0
-                   ),
-                   start_color=(image[x][y][2] / 255 - 0.1, image[x][y][1] / 255 - 0.1, image[x][y][0] / 255 - 0.1),
-                   end_color=(image[x][y][2] / 255 + 0.1, image[x][y][1] / 255 + 0.1, image[x][y][0] / 255 + 0.1),
-                   speed=(0.000, 0.000, 0.0),
-                   slices=3,
-                   stacks=10,
-                   rotation_angle=45,
-                   rotation_speed=10)
+            Sphere(
+                picture=picture,
+                position=vector(
+                    index_to_coordinate_mapper(x, factor, len(image), width),
+                    index_to_coordinate_mapper(y, factor, len(image), width),
+                    0.0
+                ),
+                speed=(
+                    random.uniform(-0.0025, 0.0025),
+                    random.uniform(-0.0025, 0.0025),
+                    0),
+                rotation_angle_x=0.1,
+                rotation_angle_y=0.0,
+                # radius=1 / len(image) * factor + random.uniform(0, 0.001 * factor),
+                radius=1 / len(image) * factor,
+                color=vector(
+                    image[x][y][2] / 255,
+                    image[x][y][1] / 255,
+                    image[x][y][0] / 255
+                )
+            )
         )
-        print(x, y)
-
-# s1 = Sphere(radius=0.01, position=(900 / 1000, 900 / 1000, 0.0), start_color=image[800][10], end_color=image[800][0],
-#             speed=(0.000, 0.000, 0.0), slices=3, stacks=3, rotation_angle=45, rotation_speed=10)
 
 picture.visualize(spheres=spheres)
