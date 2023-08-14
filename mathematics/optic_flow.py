@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
+from mathematics.gaussian_rescaling import gaussian_rescaling
 from mathematics.img_grad import img_grad
 from mathematics.mywarp_rgb import mywarp_rgb
 
