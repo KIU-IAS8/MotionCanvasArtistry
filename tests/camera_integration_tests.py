@@ -29,7 +29,7 @@ def test_capture_frames_successful(mock_capture_device_opened):
     device = VideoCaptureDevice()
     device.video_capture = mock_capture_device_opened
 
-    result_frame = device.capture_frames()
+    result_frame = device.capture_frame()
 
     assert (result_frame == mock_capture_device_opened.frame_data).all()
 
@@ -39,4 +39,4 @@ def test_capture_frames_device_unavailable(mock_capture_device_not_opened):
     device.video_capture = mock_capture_device_not_opened
 
     with (pytest.raises(Exception)):
-        device.capture_frames()
+        device.capture_frame()
