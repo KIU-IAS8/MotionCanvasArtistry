@@ -1,7 +1,4 @@
-import random
-import time
-
-from vpython import rate, vector, canvas
+from vpython import rate, canvas
 
 
 class Picture:
