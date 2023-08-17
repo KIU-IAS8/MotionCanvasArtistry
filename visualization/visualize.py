@@ -1,7 +1,4 @@
-import random
-import time
-
-from vpython import rate, vector, canvas
+from vpython import rate, canvas
 
 
 class Picture:
@@ -40,8 +37,12 @@ class Picture:
         return self.__width
 
     def visualize(self, **objects):
-        time.sleep(3)
-        while True:
-            rate(self.__rate)
-            for sphere in objects["spheres"]:
-                sphere.rebase(random.uniform(-0.0005, 0.0005), random.uniform(-0.0005, 0.0005))
+        rate(self.__rate)
+        for i in range(len(objects["spheres"])):
+            objects["spheres"][i].move(0.0, 0.0)
+
+    def rebase(self, **objects):
+        rate(self.__rate)
+        for i in range(len(objects["spheres"])):
+            if i < len(objects["accelerations"]):
+                objects["spheres"][i].move(objects["accelerations"][i][0], objects["accelerations"][i][1])

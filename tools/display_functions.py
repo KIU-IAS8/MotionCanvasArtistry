@@ -15,7 +15,7 @@ class LiveCapture(VideoCaptureDevice):
             cv2.imshow(
                 "Live Camera",
                 cv2.resize(
-                    self.capture_frames(),
+                    self.capture_frame(),
                     (self.__frame_width,
                      self.__frame_height)
                 )
@@ -29,7 +29,7 @@ class LiveCapture(VideoCaptureDevice):
                 "Live Camera Sobel X",
                 cv2.resize(
                     cv2.Sobel(
-                        self.capture_frames(),
+                        self.capture_frame(),
                         cv2.CV_64F, 1, 0),
                     (self.__frame_width,
                      self.__frame_height)
@@ -44,7 +44,7 @@ class LiveCapture(VideoCaptureDevice):
                 "Live Camera Sobel Y",
                 cv2.resize(
                     cv2.Sobel(
-                        self.capture_frames(),
+                        self.capture_frame(),
                         cv2.CV_64F, 0, 1),
                     (self.__frame_width,
                      self.__frame_height)
@@ -59,7 +59,7 @@ class LiveCapture(VideoCaptureDevice):
                 "Live Camera Sobel Gradient Magnitude",
                 cv2.resize(
                     sobel_filter_gradient_magnitude(
-                        self.capture_frames()),
+                        self.capture_frame()),
                     (self.__frame_width,
                      self.__frame_height)
                 )
@@ -73,7 +73,7 @@ class LiveCapture(VideoCaptureDevice):
                 "Live Camera Morphological Erosion",
                 cv2.resize(
                     morphological_filter(
-                        self.capture_frames())[0],
+                        self.capture_frame())[0],
                     (self.__frame_width,
                      self.__frame_height)
                 )
@@ -87,7 +87,7 @@ class LiveCapture(VideoCaptureDevice):
                 "Live Camera Morphological Dilation",
                 cv2.resize(
                     morphological_filter(
-                        self.capture_frames())[1],
+                        self.capture_frame())[1],
                     (self.__frame_width,
                      self.__frame_height)
                 )
@@ -101,7 +101,7 @@ class LiveCapture(VideoCaptureDevice):
                 "Live Camera Morphological Erosion On Sobel Gradient Magnitude",
                 cv2.resize(
                     morphological_filter(
-                        sobel_filter_gradient_magnitude(self.capture_frames()))[0],
+                        sobel_filter_gradient_magnitude(self.capture_frame()))[0],
                     (self.__frame_width,
                      self.__frame_height)
                 )
@@ -115,7 +115,7 @@ class LiveCapture(VideoCaptureDevice):
                 "Live Camera Morphological Dilation On Sobel Gradient Magnitude",
                 cv2.resize(
                     morphological_filter(
-                        sobel_filter_gradient_magnitude(self.capture_frames()))[1],
+                        sobel_filter_gradient_magnitude(self.capture_frame()))[1],
                     (self.__frame_width,
                      self.__frame_height)
                 )
