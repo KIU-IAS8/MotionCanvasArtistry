@@ -3,8 +3,8 @@ from transformations.conversions import convert_to_grayscale_cv2
 from visualization.objects.sphere import Sphere
 from visualization.visualize import Picture
 from mathematics.operations import rotate_matrix_right, index_to_coordinate_mapper
-from mathematics.optical_flow import optical_flow_horn_schunck
 from vpython import vector, rate
+import numpy as np
 import time
 import cv2
 
@@ -48,7 +48,7 @@ def initialize(factor=10, width=800, height=800, image_path="mock_data/images/im
     return camera, picture, image, spheres
 
 
-def main(factor=20, width=800, height=800, image_path="mock_data/images/img2.png"):
+def main(factor=25, width=800, height=800, image_path="mock_data/images/img2.png"):
     camera, picture, image, spheres = initialize(factor=factor, width=width, height=height, image_path=image_path)
 
     picture.visualize(spheres=spheres)
@@ -60,13 +60,12 @@ def main(factor=20, width=800, height=800, image_path="mock_data/images/img2.png
         rate(picture.get_rate())
 
         frame2 = convert_to_grayscale_cv2(camera.capture_frame())
-        u, v = optical_flow_horn_schunck(frame1, frame2)
-
+        flow = cv2.calcOpticalFlowFarneback(frame1, frame2, None, 0.5, 3, 15, 3, 5, 1.1, 0)
         accelerations = []
 
-        for i in range((len(u) - height) // 2, (len(u) + height) // 2, factor):
-            for j in range((len(u[i]) - width) // 2, (len(u[i]) + width) // 2, factor):
-                accelerations.append([round(float(u[i][j]) / 10, 5), round(float(v[i][j]) / 10, 5)])
+        for i in range((flow.shape[0] - height) // 2, (flow.shape[0] + height) // 2, factor):
+            for j in range((flow.shape[1] - width) // 2, (flow.shape[1] + width) // 2, factor):
+                accelerations.append((flow[i][j][0], flow[i][j][1]))
 
         picture.rebase(spheres=spheres, accelerations=accelerations)
 

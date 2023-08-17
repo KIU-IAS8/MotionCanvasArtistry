@@ -11,7 +11,7 @@ class VideoCaptureDevice:
         if self.video_capture.isOpened():
             check, data = self.video_capture.read()
             if check:
-                return self.resize(data, 2.3)
+                return self.resize(data, 2.23)
             else:
                 raise Exception("Unable to extract frames")
         else:
