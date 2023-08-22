@@ -1,5 +1,3 @@
-import random
-
 from vpython import sphere, vector
 
 

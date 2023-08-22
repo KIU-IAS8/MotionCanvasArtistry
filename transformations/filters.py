@@ -15,13 +15,13 @@ def sobel_filter_gradient_magnitude(image_matrix):
     return gradient_magnitude
 
 
-
-
 def morphological_filter(image_matrix):
     erosion = cv2.erode(image_matrix, np.array(ONES), iterations=1)
     dilation = cv2.dilate(image_matrix, np.array(ONES), iterations=1)
 
     return erosion, dilation
+
+
 def scharr_filter_gradient_magnitude(image_matrix):
 
     gray_image = cv2.cvtColor(image_matrix, cv2.COLOR_BGR2GRAY)
@@ -34,6 +34,7 @@ def scharr_filter_gradient_magnitude(image_matrix):
 
     return gradient_m
 
+
 def prewitt_filter_gradient_magnitude(image_matrix):
     gray_image = cv2.cvtColor(image_matrix, cv2.COLOR_BGR2GRAY)
 
@@ -45,12 +46,14 @@ def prewitt_filter_gradient_magnitude(image_matrix):
 
     return gradient_magnitude
 
+
 def canny_edge_detection(image_matrix):
     gray_image = cv2.cvtColor(image_matrix, cv2.COLOR_BGR2GRAY)
 
     edges = cv2.Canny(gray_image, threshold1=100, threshold2=200)
 
     return edges
+
 
 def roberts_cross_gradient_magnitude(image_matrix):
     gray_image = cv2.cvtColor(image_matrix, cv2.COLOR_BGR2GRAY)
@@ -62,6 +65,7 @@ def roberts_cross_gradient_magnitude(image_matrix):
     gradient_magnitude = cv2.normalize(gradient_magnitude, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
 
     return gradient_magnitude
+
 
 def laplacian_filter_gradient_magnitude(image_matrix):
     gray_image = cv2.cvtColor(image_matrix, cv2.COLOR_BGR2GRAY)
