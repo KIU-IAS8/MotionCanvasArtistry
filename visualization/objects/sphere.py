@@ -36,14 +36,17 @@ class Sphere:
     def get_shape(self):
         return self.__shape
 
-    def get_speed(self):
-        return self.__speed
-
     def get_rotation_angle_x(self):
         return self.__rotation_angle_x
 
     def get_rotation_angle_y(self):
         return self.__rotation_angle_y
+
+    def get_pos_x(self):
+        return self.__shape.pos.x
+
+    def get_pos_y(self):
+        return self.__shape.pos.y
 
     def set_rotation_angle_x(self, a):
         self.__rotation_angle_x = a
@@ -64,6 +67,3 @@ class Sphere:
 
         self.__shape.pos.x += x
         self.__shape.pos.y += y
-
-    def rebase(self, a_x, a_y):
-        pass
