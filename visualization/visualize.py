@@ -1,4 +1,5 @@
 from vpython import rate, canvas
+from mathematics.operations import coordinate_to_index_mapper
 
 
 class Picture:
@@ -36,13 +37,16 @@ class Picture:
     def get_width(self):
         return self.__width
 
-    def visualize(self, **objects):
+    def visualize(self):
         rate(self.__rate)
-        for i in range(len(objects["spheres"])):
-            objects["spheres"][i].move(0.0, 0.0)
 
     def rebase(self, **objects):
-        rate(self.__rate)
-        for i in range(len(objects["spheres"])):
-            if i < len(objects["accelerations"]):
-                objects["spheres"][i].move(objects["accelerations"][i][0], objects["accelerations"][i][1])
+        new_spheres = {}
+
+        for c, s in objects["spheres"].items():
+            if c in objects["accelerations"].keys():
+                s.move(objects["accelerations"][c][0], objects["accelerations"][c][1])
+            k = f"{coordinate_to_index_mapper(s.get_pos_x(), self.__factor, self.__width)},{coordinate_to_index_mapper(s.get_pos_y(), self.__factor, self.__width)}"
+            new_spheres.update({k: s})
+
+        return new_spheres
