@@ -47,7 +47,7 @@ def initialize(factor=10, width=800, height=800, image_path="mock_data/images/im
     return camera, picture, image, spheres
 
 
-def main(factor=20, width=800, height=800, image_path="mock_data/images/mock3.jpg"):
+def run(factor=20, width=800, height=800, image_path="mock_data/images/mock3.jpg"):
     camera, picture, image, spheres = initialize(factor=factor, width=width, height=height, image_path=image_path)
 
     time.sleep(1)
@@ -75,4 +75,5 @@ def main(factor=20, width=800, height=800, image_path="mock_data/images/mock3.jp
         frame1 = frame2
 
 
-main()
+if __name__ == "__main__":
+    run()
