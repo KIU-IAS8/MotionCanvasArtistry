@@ -25,7 +25,7 @@ def initialize(factor=10, width=800, height=800, image_path="mock_data/images/im
 
     for x in range(0, len(image), factor):
         for y in range(0, len(image), factor):
-            if image[x][y][0] > 50 and image[x][y][1] > 50 and image[x][y][2] > 50:
+            if image[x][y][0] > 16 and image[x][y][1] > 16 and image[x][y][2] > 16:
                 s = Sphere(
                     picture=picture,
                     position=vector(
