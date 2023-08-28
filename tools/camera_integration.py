@@ -3,7 +3,7 @@ import cv2
 
 class VideoCaptureDevice:
     def __init__(self, device_id=0, width=800, height=800):
-        self.video_capture = cv2.VideoCapture(device_id)
+        self.video_capture = cv2.VideoCapture("mock_data/vtest.avi")
         self.__width = width,
         self.__height = height
 

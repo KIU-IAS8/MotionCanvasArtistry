@@ -1,3 +1,5 @@
+import numpy as np
+
 from tools.camera_integration import VideoCaptureDevice
 from transformations.conversions import convert_to_grayscale_cv2
 from visualization.objects.sphere import Sphere
@@ -47,7 +49,7 @@ def initialize(factor=10, width=800, height=800, image_path="mock_data/images/im
     return camera, picture, image, spheres
 
 
-def run(factor=20, width=800, height=800, image_path="mock_data/images/mock3.jpg"):
+def run(factor=10, width=800, height=800, image_path="mock_data/images/img2.png"):
     camera, picture, image, spheres = initialize(factor=factor, width=width, height=height, image_path=image_path)
 
     time.sleep(1)
@@ -59,6 +61,16 @@ def run(factor=20, width=800, height=800, image_path="mock_data/images/mock3.jpg
 
         frame2 = convert_to_grayscale_cv2(camera.capture_frame())
         flow = cv2.calcOpticalFlowFarneback(frame1, frame2, None, 0.5, 3, 15, 3, 5, 1.1, 0)
+
+        print(flow.shape)
+        flow = np.zeros(flow.shape)
+
+        for i in range(0, flow.shape[0]//2):
+            for j in range(0, flow.shape[1]):
+                for k in range(0, flow.shape[2]):
+                    flow[i, j, k] = -1
+
+
         accelerations = {}
 
         x = 0
