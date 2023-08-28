@@ -8,7 +8,7 @@ import time
 import cv2
 
 
-def initialize(factor=10, width=800, height=800, image_path="mock_data/images/img2.png"):
+def initialize(factor=10, width=800, height=800, black_depth=0, image_path="mock_data/images/img2.png"):
     camera = VideoCaptureDevice()
     picture = Picture(
         factor=factor,
@@ -25,7 +25,7 @@ def initialize(factor=10, width=800, height=800, image_path="mock_data/images/im
 
     for x in range(0, len(image), factor):
         for y in range(0, len(image), factor):
-            if image[x][y][0] > 16 and image[x][y][1] > 16 and image[x][y][2] > 16:
+            if image[x][y][0] > black_depth and image[x][y][1] > black_depth and image[x][y][2] > black_depth:
                 s = Sphere(
                     picture=picture,
                     position=vector(
@@ -47,8 +47,14 @@ def initialize(factor=10, width=800, height=800, image_path="mock_data/images/im
     return camera, picture, image, spheres
 
 
-def run(factor=20, width=800, height=800, image_path="mock_data/images/mock3.jpg"):
-    camera, picture, image, spheres = initialize(factor=factor, width=width, height=height, image_path=image_path)
+def run(factor=20, width=800, height=800, black_depth=0, image_path="mock_data/images/mock3.jpg"):
+    camera, picture, image, spheres = initialize(
+        factor=factor,
+        width=width,
+        height=height,
+        black_depth=black_depth,
+        image_path=image_path
+    )
 
     time.sleep(1)
 
