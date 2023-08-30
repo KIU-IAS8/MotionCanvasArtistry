@@ -11,6 +11,7 @@ class Picture:
             fps=30,
             scale=1.5,
             necessary_spheres=10000,
+            histogram=None,
             title="Title",
     ):
         self.__width = width
@@ -21,6 +22,7 @@ class Picture:
         self.__canvas.range = scale
         self.__necessary_spheres = necessary_spheres
         self.__all_spheres = []
+        self.__histogram = histogram
 
     def get_rate(self):
         return self.__rate
@@ -86,13 +88,15 @@ class Picture:
                 else:
                     s.make_invisible()
                     if self.get_visible_spheres_count() <= self.__necessary_spheres:
-                        ss = self.spawn((0, 0))
-                        new_spheres.update({f"0,0": ss})
+                        c = self.__histogram.find_minimum_coordinates(new_spheres.keys())
+                        ss = self.spawn(c)
+                        new_spheres.update({f"{c[0]},{c[1]}": ss})
 
             else:
                 s.make_invisible()
                 if self.get_visible_spheres_count() <= self.__necessary_spheres:
-                    ss = self.spawn((0, 0))
-                    new_spheres.update({f"0,0": ss})
+                    c = self.__histogram.find_minimum_coordinates(new_spheres.keys())
+                    ss = self.spawn(c)
+                    new_spheres.update({f"{c[0]},{c[1]}": ss})
 
         return new_spheres
