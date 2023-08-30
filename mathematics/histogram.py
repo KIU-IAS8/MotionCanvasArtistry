@@ -1,9 +1,9 @@
 class Histogram:
     def __init__(
             self,
-            height=400,
-            width=400,
-            factor=10,
+            height=360,
+            width=360,
+            factor=3,
     ):
         self.__width = width
         self.__height = height
@@ -14,10 +14,11 @@ class Histogram:
                 self.__histogram.update({f"{x},{y}": 1})
 
     def write_history(self, spheres):
-        for x, y in spheres.items():
-            self.__histogram.update({x:  self.__histogram[x]+y})
+        for x in spheres:
+            if x in self.__histogram.keys():
+                self.__histogram.update({x:  self.__histogram[x]+1})
 
-    def find_minimum_cord(self, spheres):
+    def find_minimum_coordinates(self, spheres):
         minimum = ("0,0", self.__histogram['0,0'])
         for k, v in self.__histogram.items():
             if v < minimum[1] and k not in spheres:

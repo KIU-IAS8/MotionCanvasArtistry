@@ -1,4 +1,4 @@
-from vpython import sphere, vector
+from vpython import sphere
 
 
 class Sphere:

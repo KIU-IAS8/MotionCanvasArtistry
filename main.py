@@ -4,13 +4,24 @@ from visualization.objects.sphere import Sphere
 from visualization.visualize import Picture
 from mathematics.operations import rotate_matrix_right, index_to_coordinate_mapper
 from mathematics.flow_interpolation import optical_flow_interpolation
+from mathematics.histogram import Histogram
 from vpython import vector, rate
 import time
 import cv2
 
 
 def initialize(factor=10, width=360, height=360, black_depth=-1, necessary_spheres=10000, image_path="mock_data/images/img2.png"):
-    camera = VideoCaptureDevice(width=width, height=height)
+    camera = VideoCaptureDevice(
+        width=width,
+        height=height
+    )
+
+    histogram = Histogram(
+        height=height,
+        width=width,
+        factor=factor
+    )
+
     picture = Picture(
         factor=factor,
         height=height,
@@ -18,6 +29,7 @@ def initialize(factor=10, width=360, height=360, black_depth=-1, necessary_spher
         necessary_spheres=necessary_spheres,
         fps=30,
         scale=1,
+        histogram=histogram,
         title=image_path
     )
 
@@ -47,11 +59,11 @@ def initialize(factor=10, width=360, height=360, black_depth=-1, necessary_spher
                 picture.add_sphere(s)
                 spheres.update({f"{x},{y}": s})
 
-    return camera, picture, image, spheres
+    return camera, picture, image, spheres, histogram
 
 
-def run(factor=3, width=360, height=360, black_depth=-1, speed=5, necessary_spheres=10000, image_path="mock_data/images/mock4.jpg"):
-    camera, picture, image, spheres = initialize(
+def run(factor=8, width=360, height=360, black_depth=-1, speed=5, necessary_spheres=11000, image_path="mock_data/images/mock4.jpg"):
+    camera, picture, image, spheres, histogram = initialize(
         factor=factor,
         width=width,
         height=height,
@@ -83,12 +95,12 @@ def run(factor=3, width=360, height=360, black_depth=-1, speed=5, necessary_sphe
             x += factor
 
         spheres = picture.rebase(spheres=spheres, displacements=displacements)
+        histogram.write_history(spheres.keys())
 
         frame1 = frame2
         cv2.imshow("test", cv2.rotate(frame1, cv2.ROTATE_90_COUNTERCLOCKWISE))
         if cv2.waitKey(1) & 0xFF == ord("q"):
             raise SystemExit
-
 
 
 if __name__ == "__main__":
