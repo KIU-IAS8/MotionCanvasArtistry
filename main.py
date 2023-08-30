@@ -62,7 +62,7 @@ def initialize(factor=10, width=360, height=360, black_depth=-1, necessary_spher
     return camera, picture, image, spheres, histogram
 
 
-def run(factor=8, width=360, height=360, black_depth=-1, speed=5, necessary_spheres=11000, image_path="mock_data/images/mock4.jpg"):
+def run(factor=10, width=360, height=360, black_depth=-1, speed=5, necessary_spheres=10000, image_path="mock_data/images/mock4.jpg"):
     camera, picture, image, spheres, histogram = initialize(
         factor=factor,
         width=width,
