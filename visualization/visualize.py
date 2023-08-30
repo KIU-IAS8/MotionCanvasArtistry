@@ -1,5 +1,5 @@
 from vpython import rate, canvas
-from mathematics.operations import coordinate_to_index_mapper
+from mathematics.operations import coordinate_to_index_mapper, index_to_coordinate_mapper
 
 
 class Picture:
@@ -10,6 +10,7 @@ class Picture:
             factor=10,
             fps=30,
             scale=1.5,
+            necessary_spheres=10000,
             title="Title",
     ):
         self.__width = width
@@ -18,6 +19,7 @@ class Picture:
         self.__rate = fps
         self.__canvas = canvas(title=title, width=width, height=height)
         self.__canvas.range = scale
+        self.__necessary_spheres = necessary_spheres
         self.__all_spheres = []
 
     def get_rate(self):
@@ -47,8 +49,26 @@ class Picture:
     def get_visible_spheres(self):
         return [s for s in self.__all_spheres if s.get_shape().visible]
 
+    def get_visible_spheres_count(self):
+        return len([s for s in self.__all_spheres if s.get_shape().visible])
+
     def get_invisible_spheres(self):
         return [s for s in self.__all_spheres if not s.get_shape().visible]
+
+    def get_random_invisible_sphere(self):
+        for s in self.__all_spheres:
+            if not s.get_shape().visible:
+                return s
+        return None
+
+    def spawn(self, coordinates):
+        s = self.get_random_invisible_sphere()
+        s.make_visible(
+            index_to_coordinate_mapper(coordinates[0], self.__factor, self.__width),
+            index_to_coordinate_mapper(coordinates[1], self.__factor, self.__width)
+        )
+
+        return s
 
     def visualize(self):
         rate(self.__rate)
@@ -65,8 +85,14 @@ class Picture:
                     new_spheres.update({k: s})
                 else:
                     s.make_invisible()
+                    if self.get_visible_spheres_count() <= self.__necessary_spheres:
+                        ss = self.spawn((0, 0))
+                        new_spheres.update({f"0,0": ss})
 
             else:
                 s.make_invisible()
+                if self.get_visible_spheres_count() <= self.__necessary_spheres:
+                    ss = self.spawn((0, 0))
+                    new_spheres.update({f"0,0": ss})
 
         return new_spheres
