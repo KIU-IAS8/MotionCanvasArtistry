@@ -55,7 +55,9 @@ class Sphere:
     def make_invisible(self):
         self.__shape.visible = False
 
-    def make_visible(self):
+    def make_visible(self, x, y):
+        self.__shape.pos.x = x
+        self.__shape.pos.y = y
         self.__shape.visible = True
 
     def move(self, x, y):
