@@ -17,13 +17,14 @@ class Histogram:
         for x, y in spheres.items():
             self.__histogram.update({x:  self.__histogram[x]+y})
 
-    def calculate_proportion(self, count):
-        result = {}
-        hist = 0
-        for x, y in self.__histogram.items():
-            hist += y
+    def calculate_proportion(self, spheres, count):
+        result = []
 
-        for x, y in self.__histogram.items():
-            result.update({x: count * y // hist})
+        for k, v in sorted(self.__histogram.items(), key=lambda m: m[1]):
+            if count <= 0:
+                return result
+            if k not in spheres:
+                result.append(k)
+                count -= 1
 
         return result
