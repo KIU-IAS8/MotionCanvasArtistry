@@ -11,7 +11,7 @@ class VideoCaptureDevice:
         if self.video_capture.isOpened():
             check, data = self.video_capture.read()
             if check:
-                return cv2.flip(self.crop(data), 1)
+                return cv2.rotate(cv2.flip(self.crop(data), 1), cv2.ROTATE_90_CLOCKWISE)
             else:
                 raise Exception("Unable to extract frames")
         else:

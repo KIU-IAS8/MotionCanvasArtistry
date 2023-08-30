@@ -12,7 +12,11 @@ def optical_flow_interpolation(flow: np.ndarray) -> np.ndarray:
     new_x = np.clip(new_x, 0, w - 1)
     new_y = np.clip(new_y, 0, h - 1)
 
-    interpolated_flow = cv2.remap(flow, new_x.astype(np.float32), new_y.astype(np.float32),
-                                  interpolation=cv2.INTER_LINEAR)
+    interpolated_flow = cv2.remap(
+        flow,
+        new_x.astype(np.float32),
+        new_y.astype(np.float32),
+        interpolation=cv2.INTER_LINEAR
+    )
 
     return interpolated_flow

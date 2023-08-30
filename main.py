@@ -67,27 +67,26 @@ def run(factor=3, width=360, height=360, black_depth=-1, speed=5, image_path="mo
 
         frame2 = convert_to_grayscale_cv2(camera.capture_frame())
         flow = cv2.calcOpticalFlowFarneback(frame1, frame2, None, 0.5, 3, 15, 3, 5, 1.1, 0)
-        interpolated_flow = optical_flow_interpolation(flow)
-        
+        force = optical_flow_interpolation(flow)
+
         displacements = {}
 
         x = 0
 
-        for i in range((flow.shape[0] - height) // 2, (flow.shape[0] + height) // 2, factor):
+        for i in range((force.shape[0] - height) // 2, (force.shape[0] + height) // 2, factor):
             y = 0
-            for j in range((flow.shape[1] - width) // 2, (flow.shape[1] + width) // 2, factor):
-                displacements.update({f"{x},{y}": (flow[i][j][0]/(100/speed), flow[i][j][1]/(100/speed))})
+            for j in range((force.shape[1] - width) // 2, (force.shape[1] + width) // 2, factor):
+                displacements.update({f"{x},{y}": (force[i][j][0] / (1000 / speed), force[i][j][1] / (1000 / speed))})
                 y += factor
             x += factor
 
         spheres = picture.rebase(spheres=spheres, displacements=displacements)
 
         frame1 = frame2
-        cv2.imshow("test", frame1)
+        cv2.imshow("test", cv2.rotate(frame1, cv2.ROTATE_90_COUNTERCLOCKWISE))
         if cv2.waitKey(1) & 0xFF == ord("q"):
             raise SystemExit
 
-        print(len(picture.get_visible_spheres()), len(picture.get_invisible_spheres()))
 
 
 if __name__ == "__main__":
