@@ -18,6 +18,7 @@ class Picture:
         self.__rate = fps
         self.__canvas = canvas(title=title, width=width, height=height)
         self.__canvas.range = scale
+        self.__all_spheres = []
 
     def get_rate(self):
         return self.__rate
@@ -37,6 +38,18 @@ class Picture:
     def get_width(self):
         return self.__width
 
+    def get_all_spheres(self):
+        return self.__all_spheres
+
+    def add_sphere(self, sphere):
+        self.__all_spheres.append(sphere)
+
+    def get_visible_spheres(self):
+        return [s for s in self.__all_spheres if s.get_shape().visible]
+
+    def get_invisible_spheres(self):
+        return [s for s in self.__all_spheres if not s.get_shape().visible]
+
     def visualize(self):
         rate(self.__rate)
 
@@ -44,9 +57,16 @@ class Picture:
         new_spheres = {}
 
         for c, s in objects["spheres"].items():
-            if c in objects["accelerations"].keys():
-                s.move(objects["accelerations"][c][0], objects["accelerations"][c][1])
-            k = f"{coordinate_to_index_mapper(s.get_pos_x(), self.__factor, self.__width)},{coordinate_to_index_mapper(s.get_pos_y(), self.__factor, self.__width)}"
-            new_spheres.update({k: s})
+            if c in objects["displacements"].keys():
+                s.move(objects["displacements"][c][0], objects["displacements"][c][1])
+                k = f"{coordinate_to_index_mapper(s.get_pos_x(), self.__factor, self.__width)},{coordinate_to_index_mapper(s.get_pos_y(), self.__factor, self.__width)}"
+
+                if k not in new_spheres.keys():
+                    new_spheres.update({k: s})
+                else:
+                    s.make_invisible()
+
+            else:
+                s.make_invisible()
 
         return new_spheres

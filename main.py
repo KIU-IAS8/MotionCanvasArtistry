@@ -8,8 +8,8 @@ import time
 import cv2
 
 
-def initialize(factor=10, width=800, height=800, black_depth=0, image_path="mock_data/images/img2.png"):
-    camera = VideoCaptureDevice()
+def initialize(factor=10, width=360, height=360, black_depth=-1, image_path="mock_data/images/img2.png"):
+    camera = VideoCaptureDevice(width=width, height=height)
     picture = Picture(
         factor=factor,
         height=height,
@@ -42,12 +42,13 @@ def initialize(factor=10, width=800, height=800, black_depth=0, image_path="mock
                         image[x][y][0] / 255
                     )
                 )
+                picture.add_sphere(s)
                 spheres.update({f"{x},{y}": s})
 
     return camera, picture, image, spheres
 
 
-def run(factor=20, width=800, height=800, black_depth=0, image_path="mock_data/images/mock3.jpg"):
+def run(factor=3, width=360, height=360, black_depth=-1, speed=5, image_path="mock_data/images/mock4.jpg"):
     camera, picture, image, spheres = initialize(
         factor=factor,
         width=width,
@@ -65,20 +66,26 @@ def run(factor=20, width=800, height=800, black_depth=0, image_path="mock_data/i
 
         frame2 = convert_to_grayscale_cv2(camera.capture_frame())
         flow = cv2.calcOpticalFlowFarneback(frame1, frame2, None, 0.5, 3, 15, 3, 5, 1.1, 0)
-        accelerations = {}
+
+        displacements = {}
 
         x = 0
 
         for i in range((flow.shape[0] - height) // 2, (flow.shape[0] + height) // 2, factor):
             y = 0
             for j in range((flow.shape[1] - width) // 2, (flow.shape[1] + width) // 2, factor):
-                accelerations.update({f"{x},{y}": (flow[i][j][0], flow[i][j][1])})
+                displacements.update({f"{x},{y}": (flow[i][j][0]/(100/speed), flow[i][j][1]/(100/speed))})
                 y += factor
             x += factor
 
-        spheres = picture.rebase(spheres=spheres, accelerations=accelerations)
+        spheres = picture.rebase(spheres=spheres, displacements=displacements)
 
         frame1 = frame2
+        cv2.imshow("test", frame1)
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            raise SystemExit
+
+        print(len(picture.get_visible_spheres()), len(picture.get_invisible_spheres()))
 
 
 if __name__ == "__main__":
