@@ -52,6 +52,12 @@ class Sphere:
     def set_rotation_angle_y(self, a):
         self.__rotation_angle_y = a
 
+    def make_invisible(self):
+        self.__shape.visible = False
+
+    def make_visible(self):
+        self.__shape.visible = True
+
     def move(self, x, y):
         if not (-self.__picture.get_width() * self.__picture.get_canvas().range) <= (
                 self.__shape.pos.x + x) * self.__picture.get_width() <= (
