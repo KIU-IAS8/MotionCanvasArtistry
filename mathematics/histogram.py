@@ -17,14 +17,11 @@ class Histogram:
         for x, y in spheres.items():
             self.__histogram.update({x:  self.__histogram[x]+y})
 
-    def calculate_proportion(self, spheres, count):
-        result = []
+    def find_minimum_cord(self, spheres):
+        minimum = ("0,0", self.__histogram['0,0'])
+        for k, v in self.__histogram.items():
+            if v < minimum[1] and k not in spheres:
+                minimum = (k, v)
 
-        for k, v in sorted(self.__histogram.items(), key=lambda m: m[1]):
-            if count <= 0:
-                return result
-            if k not in spheres:
-                result.append(k)
-                count -= 1
-
-        return result
+        coordinate = minimum[0].split(',')
+        return int(coordinate[0]), int(coordinate[1])
