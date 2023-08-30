@@ -9,12 +9,13 @@ import time
 import cv2
 
 
-def initialize(factor=10, width=360, height=360, black_depth=-1, image_path="mock_data/images/img2.png"):
+def initialize(factor=10, width=360, height=360, black_depth=-1, necessary_spheres=10000, image_path="mock_data/images/img2.png"):
     camera = VideoCaptureDevice(width=width, height=height)
     picture = Picture(
         factor=factor,
         height=height,
         width=width,
+        necessary_spheres=necessary_spheres,
         fps=30,
         scale=1,
         title=image_path
@@ -49,13 +50,14 @@ def initialize(factor=10, width=360, height=360, black_depth=-1, image_path="moc
     return camera, picture, image, spheres
 
 
-def run(factor=3, width=360, height=360, black_depth=-1, speed=5, image_path="mock_data/images/mock4.jpg"):
+def run(factor=3, width=360, height=360, black_depth=-1, speed=5, necessary_spheres=10000, image_path="mock_data/images/mock4.jpg"):
     camera, picture, image, spheres = initialize(
         factor=factor,
         width=width,
         height=height,
         black_depth=black_depth,
-        image_path=image_path
+        image_path=image_path,
+        necessary_spheres=necessary_spheres
     )
 
     time.sleep(1)
