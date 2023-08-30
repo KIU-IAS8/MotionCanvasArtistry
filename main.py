@@ -65,6 +65,7 @@ def run(factor=20, width=800, height=800, black_depth=0, image_path="mock_data/i
 
         frame2 = convert_to_grayscale_cv2(camera.capture_frame())
         flow = cv2.calcOpticalFlowFarneback(frame1, frame2, None, 0.5, 3, 15, 3, 5, 1.1, 0)
+
         accelerations = {}
 
         x = 0
