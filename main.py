@@ -3,6 +3,7 @@ from transformations.conversions import convert_to_grayscale_cv2
 from visualization.objects.sphere import Sphere
 from visualization.visualize import Picture
 from mathematics.operations import rotate_matrix_right, index_to_coordinate_mapper
+from mathematics.flow_interpolation import optical_flow_interpolation
 from vpython import vector, rate
 import time
 import cv2
@@ -65,6 +66,7 @@ def run(factor=20, width=800, height=800, black_depth=0, image_path="mock_data/i
 
         frame2 = convert_to_grayscale_cv2(camera.capture_frame())
         flow = cv2.calcOpticalFlowFarneback(frame1, frame2, None, 0.5, 3, 15, 3, 5, 1.1, 0)
+        interpolated_flow = optical_flow_interpolation(flow)
         accelerations = {}
 
         x = 0
