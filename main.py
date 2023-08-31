@@ -8,6 +8,7 @@ from mathematics.histogram import Histogram
 from vpython import vector, rate
 import time
 import cv2
+import sys
 
 
 def initialize(
@@ -133,4 +134,20 @@ def run(
 
 
 if __name__ == "__main__":
-    run()
+    try:
+        if len(sys.argv) > 1:
+            run(
+                device_id=int(sys.argv[1]),
+                factor=int(sys.argv[2]),
+                width=int(sys.argv[3]),
+                height=int(sys.argv[4]),
+                black_depth=int(sys.argv[5]),
+                speed=int(sys.argv[6]),
+                spawn_range=int(sys.argv[7]),
+                grow_speed=int(sys.argv[8]),
+                image_path=f"mock_data/images/{sys.argv[9]}.jpg"
+            )
+        else:
+            run()
+    except Exception:
+        run()
