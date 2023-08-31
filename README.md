@@ -30,6 +30,14 @@
 
 -- --
 
+### Recommended Configurations
+
+`python main.py 1 10 480 480 -1 5 2 2 mock5`
+
+`python main.py 0 8 360 360 -1 5 2 2 mock4`
+
+-- --
+
 ## Comment
 Use `SQUARE` images only. `Width AND height` of the image must be equal to the `HEIGHT` of the live camera resolution.
 
