@@ -20,9 +20,9 @@
 
 `[arg5]` - `black_depth` (Determines the lowest level of black color in range [0, 255]. Under this level the color will be ignored and sphere will not be created for this pixel) `Example: 16 (If you do not want to ignore any pixels use -1)`
 
-`[arg6]` - `speed` (Determines the movement speed of the spheres) `Example: 2`
+`[arg6]` - `speed` (Determines the movement speed of the spheres) `Example: 5`
 
-`[arg7]` - `spawn_range` (Determines how many spheres should be spawn at once when if count of the spheres become lower than the minimum quantity acceptable) `Example: 3`
+`[arg7]` - `spawn_range` (Determines how many spheres should be spawn at once when if count of the spheres become lower than the minimum quantity acceptable) `Example: 2`
 
 `[arg8]` - `grow_speed` (Determines the growth speed of the sphere radius) `Example: 2`
 
