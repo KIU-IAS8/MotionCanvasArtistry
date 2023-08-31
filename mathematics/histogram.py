@@ -1,3 +1,6 @@
+import random
+
+
 class Histogram:
     def __init__(
             self,
@@ -16,7 +19,7 @@ class Histogram:
     def write_history(self, spheres):
         for x in spheres:
             if x in self.__histogram.keys():
-                self.__histogram.update({x:  self.__histogram[x]+1})
+                self.__histogram.update({x: self.__histogram[x] + 1})
 
     def find_minimum_coordinates(self, spheres):
         minimum = ("0,0", self.__histogram['0,0'])
@@ -26,3 +29,10 @@ class Histogram:
 
         coordinate = minimum[0].split(',')
         return int(coordinate[0]), int(coordinate[1])
+
+    def find_random_coordinates(self, spheres):
+        while True:
+            x = random.randint(0, self.__width - self.__factor)
+            y = random.randint(0, self.__height - self.__factor)
+            if f"{x},{y}" not in spheres:
+                return x, y

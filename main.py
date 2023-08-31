@@ -10,8 +10,20 @@ import time
 import cv2
 
 
-def initialize(factor=10, width=360, height=360, black_depth=-1, necessary_spheres=10000, image_path="mock_data/images/img2.png"):
+def initialize(
+        device_id=0,
+        factor=10,
+        width=360,
+        height=360,
+        black_depth=-1,
+        min_spheres=10000,
+        max_spheres=20000,
+        spawn_range=3,
+        grow_speed=1,
+        image_path="mock_data/images/img2.png"
+):
     camera = VideoCaptureDevice(
+        device_id=device_id,
         width=width,
         height=height
     )
@@ -26,7 +38,9 @@ def initialize(factor=10, width=360, height=360, black_depth=-1, necessary_spher
         factor=factor,
         height=height,
         width=width,
-        necessary_spheres=necessary_spheres,
+        min_spheres=min_spheres,
+        max_spheres=max_spheres,
+        spawn_range=spawn_range,
         fps=30,
         scale=1,
         histogram=histogram,
@@ -49,6 +63,7 @@ def initialize(factor=10, width=360, height=360, black_depth=-1, necessary_spher
                     ),
                     rotation_angle_x=0.1,
                     rotation_angle_y=0.0,
+                    grow_speed=grow_speed,
                     radius=1 / len(image) * factor,
                     color=vector(
                         image[x][y][2] / 255,
@@ -62,17 +77,31 @@ def initialize(factor=10, width=360, height=360, black_depth=-1, necessary_spher
     return camera, picture, image, spheres, histogram
 
 
-def run(factor=10, width=360, height=360, black_depth=-1, speed=5, necessary_spheres=10000, image_path="mock_data/images/mock4.jpg"):
+def run(
+        device_id=1,
+        factor=10,
+        width=480,
+        height=480,
+        black_depth=-1,
+        speed=5,
+        spawn_range=2,
+        grow_speed=2.5,
+        image_path="mock_data/images/mock5.jpg"
+):
     camera, picture, image, spheres, histogram = initialize(
+        device_id=device_id,
         factor=factor,
         width=width,
         height=height,
         black_depth=black_depth,
         image_path=image_path,
-        necessary_spheres=necessary_spheres
+        min_spheres=(width * height // factor // factor) - 1000,
+        max_spheres=width * height // factor // factor,
+        spawn_range=spawn_range,
+        grow_speed=grow_speed,
     )
 
-    time.sleep(1)
+    time.sleep(3)
 
     frame1 = convert_to_grayscale_cv2(camera.capture_frame())
 
