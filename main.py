@@ -128,7 +128,7 @@ def run(
         histogram.write_history(spheres.keys())
 
         frame1 = frame2
-        cv2.imshow("test", cv2.rotate(frame1, cv2.ROTATE_90_COUNTERCLOCKWISE))
+        cv2.imshow("Live Camera", cv2.rotate(frame1, cv2.ROTATE_90_COUNTERCLOCKWISE))
         if cv2.waitKey(1) & 0xFF == ord("q"):
             raise SystemExit
 
