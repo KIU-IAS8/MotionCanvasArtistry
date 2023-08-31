@@ -85,7 +85,7 @@ def run(
         black_depth=-1,
         speed=5,
         spawn_range=2,
-        grow_speed=2.5,
+        grow_speed=2,
         image_path="mock_data/images/mock5.jpg"
 ):
     camera, picture, image, spheres, histogram = initialize(
@@ -98,7 +98,7 @@ def run(
         min_spheres=(width * height // factor // factor) - 1000,
         max_spheres=width * height // factor // factor,
         spawn_range=spawn_range,
-        grow_speed=grow_speed,
+        grow_speed=grow_speed
     )
 
     time.sleep(3)
