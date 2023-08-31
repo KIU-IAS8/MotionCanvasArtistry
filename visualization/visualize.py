@@ -10,7 +10,9 @@ class Picture:
             factor=10,
             fps=30,
             scale=1.5,
-            necessary_spheres=10000,
+            min_spheres=10000,
+            max_spheres=20000,
+            spawn_range=3,
             histogram=None,
             title="Title",
     ):
@@ -20,7 +22,9 @@ class Picture:
         self.__rate = fps
         self.__canvas = canvas(title=title, width=width, height=height)
         self.__canvas.range = scale
-        self.__necessary_spheres = necessary_spheres
+        self.__min_spheres = min_spheres
+        self.__max_spheres = max_spheres
+        self.__spawn_range=spawn_range
         self.__all_spheres = []
         self.__histogram = histogram
 
@@ -83,20 +87,35 @@ class Picture:
                 s.move(objects["displacements"][c][0], objects["displacements"][c][1])
                 k = f"{coordinate_to_index_mapper(s.get_pos_x(), self.__factor, self.__width)},{coordinate_to_index_mapper(s.get_pos_y(), self.__factor, self.__width)}"
 
+                if ((s.get_shape_radius() >= (2 * s.get_radius()) and s.get_growing_status()) or
+                        (s.get_shape_radius() <= (s.get_radius() / 3)) and not s.get_growing_status()):
+                    s.inverse_growing()
+
+                if s.get_growing_status():
+                    if s.get_shape_radius() < s.get_radius():
+                        s.grow_fast()
+                    else:
+                        s.grow()
+                else:
+                    s.reduce()
+
                 if k not in new_spheres.keys():
                     new_spheres.update({k: s})
+
                 else:
+                    if s.get_shape_radius() >= (s.get_radius() / 10):
+                        s.make_invisible()
+                        if self.get_visible_spheres_count() <= self.__min_spheres:
+                            c = self.__histogram.find_minimum_coordinates(new_spheres.keys())
+                            ss = self.spawn(c)
+                            new_spheres.update({f"{c[0]},{c[1]}": ss})
+
+            else:
+                if s.get_shape_radius() >= (s.get_radius() / 10):
                     s.make_invisible()
-                    if self.get_visible_spheres_count() <= self.__necessary_spheres:
+                    if self.get_visible_spheres_count() <= self.__min_spheres:
                         c = self.__histogram.find_minimum_coordinates(new_spheres.keys())
                         ss = self.spawn(c)
                         new_spheres.update({f"{c[0]},{c[1]}": ss})
-
-            else:
-                s.make_invisible()
-                if self.get_visible_spheres_count() <= self.__necessary_spheres:
-                    c = self.__histogram.find_minimum_coordinates(new_spheres.keys())
-                    ss = self.spawn(c)
-                    new_spheres.update({f"{c[0]},{c[1]}": ss})
 
         return new_spheres

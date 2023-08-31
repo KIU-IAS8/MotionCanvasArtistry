@@ -9,6 +9,7 @@ class Sphere:
             position=(0.0, 0.0, 0.0),
             rotation_angle_x=0.01,
             rotation_angle_y=0.0,
+            grow_speed=1,
             picture=None
     ):
         if radius <= 0:
@@ -20,6 +21,8 @@ class Sphere:
         self.__rotation_angle_y = rotation_angle_y
         self.__color = color
         self.__picture = picture
+        self.__growing = True
+        self.__grow_speed = grow_speed
 
         self.__shape = sphere(
             canvas=self.__picture.get_canvas(),
@@ -28,8 +31,20 @@ class Sphere:
             color=self.__color
         )
 
+    def inverse_growing(self):
+        if self.__growing:
+            self.__growing = False
+        else:
+            self.__growing = True
+
     def get_radius(self):
         return self.__radius
+
+    def get_growing_status(self):
+        return self.__growing
+
+    def get_shape_radius(self):
+        return self.__shape.radius
 
     def get_shape(self):
         return self.__shape
@@ -56,9 +71,20 @@ class Sphere:
         self.__shape.visible = False
 
     def make_visible(self, x, y):
+        self.__shape.radius = 0
+        self.__growing = True
         self.__shape.pos.x = x
         self.__shape.pos.y = y
         self.__shape.visible = True
+
+    def grow(self):
+        self.__shape.radius += (self.__grow_speed / 10000)
+
+    def grow_fast(self):
+        self.__shape.radius += (self.__grow_speed / 500)
+
+    def reduce(self):
+        self.__shape.radius -= (self.__grow_speed / 10000)
 
     def move(self, x, y):
         if not (-self.__picture.get_width() * self.__picture.get_canvas().range) <= (
