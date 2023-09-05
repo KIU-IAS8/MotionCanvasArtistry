@@ -109,8 +109,10 @@ def run(
     while True:
         rate(picture.get_rate())
 
-        frame2 = convert_to_grayscale_cv2(camera.capture_frame())
+        frame = camera.capture_frame()
+        frame2 = convert_to_grayscale_cv2(frame)
         flow = cv2.calcOpticalFlowFarneback(frame1, frame2, None, 0.5, 3, 15, 3, 5, 1.1, 0)
+        flow = cv2.resize(flow, (width, height), interpolation=cv2.INTER_CUBIC)
         force = optical_flow_interpolation(flow)
 
         displacements = {}
@@ -128,7 +130,7 @@ def run(
         histogram.write_history(spheres.keys())
 
         frame1 = frame2
-        cv2.imshow("Live Camera", cv2.rotate(frame1, cv2.ROTATE_90_COUNTERCLOCKWISE))
+        cv2.imshow("Live Camera", cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE))
         if cv2.waitKey(1) & 0xFF == ord("q"):
             raise SystemExit
 
