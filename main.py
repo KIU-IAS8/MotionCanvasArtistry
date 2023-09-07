@@ -113,7 +113,7 @@ def run(
         frame2 = convert_to_grayscale_cv2(frame)
         flow = cv2.calcOpticalFlowFarneback(frame1, frame2, None, 0.5, 3, 15, 3, 5, 1.1, 0)
         flow = cv2.resize(flow, (width, height), interpolation=cv2.INTER_CUBIC)
-        force = optical_flow_interpolation(flow)
+        force = optical_flow_interpolation(flow, 4)
 
         displacements = {}
 
