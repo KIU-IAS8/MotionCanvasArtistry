@@ -25,8 +25,6 @@ def initialize(
 ):
     camera = VideoCaptureDevice(
         device_id=device_id,
-        width=width,
-        height=height
     )
 
     histogram = Histogram(
