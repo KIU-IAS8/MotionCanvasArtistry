@@ -86,16 +86,46 @@ class Sphere:
     def reduce(self):
         self.__shape.radius -= (self.__grow_speed / 10000)
 
+    # def move(self, x, y):
+    #     if not (-self.__picture.get_width() * self.__picture.get_canvas().range) <= (
+    #             self.__shape.pos.x + x) * self.__picture.get_width() <= (
+    #                    self.__picture.get_width() * self.__picture.get_canvas().range):
+    #         x = 0
+    #
+    #     if not (-self.__picture.get_height() * self.__picture.get_canvas().range) <= (
+    #             self.__shape.pos.y + y) * self.__picture.get_height() <= (
+    #                    self.__picture.get_height() * self.__picture.get_canvas().range):
+    #         y = 0
+    #
+    #     self.__shape.pos.x += x
+    #     self.__shape.pos.y += y
     def move(self, x, y):
-        if not (-self.__picture.get_width() * self.__picture.get_canvas().range) <= (
-                self.__shape.pos.x + x) * self.__picture.get_width() <= (
-                       self.__picture.get_width() * self.__picture.get_canvas().range):
-            x = 0
+        canvas = self.__picture.get_canvas()
+        canvas_width = canvas.width
+        canvas_height = canvas.height
+        canvas_range = canvas.range
 
-        if not (-self.__picture.get_height() * self.__picture.get_canvas().range) <= (
-                self.__shape.pos.y + y) * self.__picture.get_height() <= (
-                       self.__picture.get_height() * self.__picture.get_canvas().range):
-            y = 0
+        new_x = self.__shape.pos.x + x
+        new_y = self.__shape.pos.y + y
 
-        self.__shape.pos.x += x
-        self.__shape.pos.y += y
+
+        if (
+                -canvas_width * canvas_range <= new_x <= canvas_width * canvas_range
+        ):
+            self.__shape.pos.x = new_x
+        else:
+
+            x = -x
+            new_x = self.__shape.pos.x + x
+            self.__shape.pos.x = new_x
+
+
+        if (
+                -canvas_height * canvas_range <= new_y <= canvas_height * canvas_range
+        ):
+            self.__shape.pos.y = new_y
+        else:
+
+            y = -y
+            new_y = self.__shape.pos.y + y
+            self.__shape.pos.y = new_y
