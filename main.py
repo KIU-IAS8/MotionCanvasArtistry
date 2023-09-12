@@ -1,3 +1,6 @@
+from collections import deque
+from threading import Thread
+
 from tools.camera_integration import VideoCaptureDevice
 from transformations.conversions import convert_to_grayscale_cv2
 from visualization.objects.sphere import Sphere
@@ -24,7 +27,7 @@ def initialize(
         image_path="mock_data/images/img2.png"
 ):
     camera = VideoCaptureDevice(
-        device_id=device_id,
+        device_id=device_id
     )
 
     histogram = Histogram(
@@ -111,7 +114,7 @@ def run(
         frame2 = convert_to_grayscale_cv2(frame)
         flow = cv2.calcOpticalFlowFarneback(frame1, frame2, None, 0.5, 3, 15, 3, 5, 1.1, 0)
         flow = cv2.resize(flow, (width, height), interpolation=cv2.INTER_CUBIC)
-        force = optical_flow_interpolation(flow, 4)
+        force = optical_flow_interpolation(flow, 3)
 
         displacements = {}
 
@@ -120,7 +123,7 @@ def run(
         for i in range((force.shape[0] - height) // 2, (force.shape[0] + height) // 2, factor):
             y = 0
             for j in range((force.shape[1] - width) // 2, (force.shape[1] + width) // 2, factor):
-                displacements.update({f"{x},{y}": (force[i][j][0] / (1000 / speed), force[i][j][1] / (1000 / speed))})
+                displacements.update({f"{x},{y}": (force[i][j][1] / (1000 / speed), force[i][j][0] / (1000 / speed))})
                 y += factor
             x += factor
 
